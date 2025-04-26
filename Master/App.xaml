@@ -4,6 +4,24 @@
              xmlns:local="clr-namespace:Master"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Accent color for buttons and highlights -->
+        <SolidColorBrush x:Key="AccentBrush" Color="#67BA80"/>
+        <!-- Default font for all controls -->
+        <Style TargetType="Control">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+        <!-- Style for buttons using accent color -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+        <!-- Style for DataGrid column headers -->
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
     </Application.Resources>
 </Application>

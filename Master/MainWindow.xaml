@@ -5,48 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Master"
         mc:Ignorable="d"
-        Title="MainWindow" Height="492" Width="1000">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <DataGrid x:Name="MainDataGrid"
-                  Grid.Row="0"
-                  Margin="5"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding PartnerId}" Width="Auto"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding PartnerName}" Width="*"/>
-                <DataGridTextColumn Header="Type" Binding="{Binding PartnerType}" Width="Auto"/>
-                <DataGridTextColumn Header="Director" Binding="{Binding Director}" Width="*"/>
-                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="Auto"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Mail}" Width="*"/>
-                <DataGridTextColumn Header="Total Sales" Binding="{Binding TotalSales}" Width="Auto"/>
-                <DataGridTextColumn Header="Discount" Binding="{Binding Discount, StringFormat=P0}" Width="Auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="5">
-            <Button x:Name="AddPartner"
-                    Content="Add Partner"
-                    Padding="10,5"
-                    Margin="5,0,0,0"
-                    Click="AddPartner_Click"/>
-            <Button x:Name="EditPartners"
-                    Content="Edit Partner"
-                    Padding="10,5"
-                    Margin="5,0,0,0"
-                    Click="EditPartners_Click"/>
-            <Button x:Name="DeletePartner"
-                    Content="Delete Partner"
-                    Padding="10,5"
-                    Margin="5,0,0,0"
-                    Click="DeletePartner_Click"/>
-        </StackPanel>
-    </Grid>
+        Title="MainWindow" Height="540" Width="1000"
+        Icon="/Master;component/Assets/logo.ico">
+    <DockPanel>
+        <!-- Header with logo and app title -->
+        <Border Background="{StaticResource AccentBrush}" Height="60" DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                <Image Source="/Master;component/Assets/logo.png" Height="40"/>
+                <TextBlock Text="Контроль партнёров" FontSize="20" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Border>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+    </DockPanel>
 </Window>

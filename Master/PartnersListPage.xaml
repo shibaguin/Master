@@ -1,0 +1,31 @@
+<Page x:Class="Master.PartnersListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:Master"
+      Title="PartnersListPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Add" Click="Add_Click" Margin="5"/>
+            <Button Content="Edit" Click="Edit_Click" Margin="5"/>
+            <Button Content="Delete" Click="Delete_Click" Margin="5"/>
+        </StackPanel>
+        <DataGrid x:Name="PartnersGrid" Grid.Row="1" Margin="5" AutoGenerateColumns="False" ItemsSource="{Binding Partners}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding PartnerId}" Width="Auto"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding PartnerName}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding PartnerType}" Width="Auto"/>
+                <DataGridTextColumn Header="Director" Binding="{Binding Director}" Width="*"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="Auto"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Mail}" Width="*"/>
+                <DataGridTextColumn Header="Total Sales" Binding="{Binding TotalSales}" Width="Auto"/>
+                <DataGridTextColumn Header="Discount" Binding="{Binding Discount, StringFormat=P0}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Back" Grid.Row="2" HorizontalAlignment="Left" Margin="5" Click="Back_Click"/>
+    </Grid>
+</Page> 

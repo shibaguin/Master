@@ -1,53 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Navigation;
 using Master.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace Master
 {
-    /// <summary>
-    /// Interaction logic for EditWindow.xaml
-    /// </summary>
-    public partial class EditWindow : Window
+    public partial class PartnerEditPage : Page
     {
         private readonly ContosoPartnersContext _context;
         private readonly Partner _partner;
         private readonly bool _isNew;
 
-        public EditWindow(Partner partner = null)
+        public PartnerEditPage(Partner partner = null)
         {
             InitializeComponent();
             _context = new ContosoPartnersContext();
             if (partner == null)
             {
                 _isNew = true;
-                // Pre-generate PartnerId for display: next numeric ID
+                // Auto-generate PartnerId
                 var maxId = _context.Partners
                     .AsEnumerable()
                     .Select(p => int.TryParse(p.PartnerId.Trim(), out var n) ? n : 0)
                     .DefaultIfEmpty(0)
                     .Max();
-                _partner = new Partner
-                {
-                    PartnerId = (maxId + 1).ToString()
-                };
+                _partner = new Partner { PartnerId = (maxId + 1).ToString() };
             }
             else
             {
                 _isNew = false;
-                _partner = _context.Partners.Find(partner.PartnerId) ?? throw new InvalidOperationException("Partner not found: " + partner.PartnerId);
+                _partner = _context.Partners.Find(partner.PartnerId)
+                    ?? throw new InvalidOperationException("Partner not found: " + partner.PartnerId);
             }
             DataContext = _partner;
         }
@@ -73,18 +60,9 @@ namespace Master
             try
             {
                 if (_isNew)
-                {
-                    // Auto-generate PartnerId: next numeric ID
-                    var maxId = _context.Partners
-                        .AsEnumerable()
-                        .Select(p => int.TryParse(p.PartnerId.Trim(), out var n) ? n : 0)
-                        .DefaultIfEmpty(0)
-                        .Max();
-                    _partner.PartnerId = (maxId + 1).ToString();
                     _context.Partners.Add(_partner);
-                }
                 _context.SaveChanges();
-                DialogResult = true;
+                NavigationService.GoBack();
             }
             catch (DbUpdateException ex)
             {
@@ -94,7 +72,12 @@ namespace Master
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false;
+            NavigationService.GoBack();
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
-}
+} 
