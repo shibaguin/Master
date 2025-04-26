@@ -8,9 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Data;
-using System.Configuration;
-using Microsoft.Data.SqlClient;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Master.Models;
 
 namespace Master
 {
@@ -19,6 +19,7 @@ namespace Master
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<Partner> Partners { get; } = new ObservableCollection<Partner>();
         public MainWindow()
         {
             InitializeComponent();
@@ -26,22 +27,37 @@ namespace Master
             {
                 LoadData();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Load Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(ex.Message, "Load Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void LoadData()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["ContosoPartners"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            Partners.Clear();
+            using var context = new ContosoPartnersContext();
+            var list = context.Partners.ToList();
+            foreach (var p in list)
+                Partners.Add(p);
+            MainDataGrid.ItemsSource = Partners;
+        }
+
+        private void EditPartners_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPartner = MainDataGrid.SelectedItem as Partner;
+            var form = new EditWindow(selectedPartner);
+            if (form.ShowDialog() == true)
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Partners", connection);
-                SqlDataAdapter adapter = new SqlDataAdapter(command);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                MainDataGrid.ItemsSource = dt.DefaultView;
+                LoadData();
+            }
+        }
+
+        private void AddPartner_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new EditWindow();
+            if (form.ShowDialog() == true)
+            {
+                LoadData();
             }
         }
     }
