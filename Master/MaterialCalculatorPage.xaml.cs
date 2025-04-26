@@ -43,7 +43,8 @@ namespace Master
 
             using var context = new ContosoPartnersContext();
             var pm = context.ProductMaterials
-                        .FirstOrDefault(x => x.ProductId == selectedProduct.ProductId && x.MaterialId == selectedMaterial.MaterialId);
+                        .FirstOrDefault(x => x.ProductId.Trim() == selectedProduct.ProductId.Trim()
+                                          && x.MaterialId.Trim() == selectedMaterial.MaterialId.Trim());
             if (pm == null)
             {
                 System.Windows.MessageBox.Show("Параметры материала для выбранного продукта не найдены", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

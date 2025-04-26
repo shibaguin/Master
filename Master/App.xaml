@@ -23,5 +23,9 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
+        <!-- Default FontFamily for TextBlock to support Cyrillic everywhere -->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
     </Application.Resources>
 </Application>
