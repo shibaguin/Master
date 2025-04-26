@@ -32,7 +32,16 @@ namespace Master
             if (partner == null)
             {
                 _isNew = true;
-                _partner = new Partner();
+                // Pre-generate PartnerId for display: next numeric ID
+                var maxId = _context.Partners
+                    .AsEnumerable()
+                    .Select(p => int.TryParse(p.PartnerId.Trim(), out var n) ? n : 0)
+                    .DefaultIfEmpty(0)
+                    .Max();
+                _partner = new Partner
+                {
+                    PartnerId = (maxId + 1).ToString()
+                };
             }
             else
             {
@@ -47,7 +56,16 @@ namespace Master
             try
             {
                 if (_isNew)
+                {
+                    // Auto-generate PartnerId: next numeric ID
+                    var maxId = _context.Partners
+                        .AsEnumerable()
+                        .Select(p => int.TryParse(p.PartnerId.Trim(), out var n) ? n : 0)
+                        .DefaultIfEmpty(0)
+                        .Max();
+                    _partner.PartnerId = (maxId + 1).ToString();
                     _context.Partners.Add(_partner);
+                }
                 _context.SaveChanges();
                 DialogResult = true;
             }

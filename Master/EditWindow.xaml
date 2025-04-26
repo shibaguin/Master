@@ -14,7 +14,7 @@
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <Label Content="Partner ID"/>
-                <TextBox Text="{Binding PartnerId, Mode=TwoWay}"/>
+                <TextBox Text="{Binding PartnerId, Mode=TwoWay}" IsReadOnly="True"/>
                 <Label Content="Partner Type"/>
                 <TextBox Text="{Binding PartnerType, Mode=TwoWay}"/>
                 <Label Content="Partner Name"/>

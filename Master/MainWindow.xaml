@@ -15,10 +15,18 @@
         <DataGrid x:Name="MainDataGrid"
                   Grid.Row="0"
                   Margin="5"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  d:ItemsSource="{d:SampleData ItemCount=5}"
-                  AutoGenerateColumns="True"/>
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding PartnerId}" Width="Auto"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding PartnerName}" Width="*"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding PartnerType}" Width="Auto"/>
+                <DataGridTextColumn Header="Director" Binding="{Binding Director}" Width="*"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="Auto"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Mail}" Width="*"/>
+                <DataGridTextColumn Header="Total Sales" Binding="{Binding TotalSales}" Width="Auto"/>
+                <DataGridTextColumn Header="Discount" Binding="{Binding Discount, StringFormat=P0}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal"
@@ -34,6 +42,11 @@
                     Padding="10,5"
                     Margin="5,0,0,0"
                     Click="EditPartners_Click"/>
+            <Button x:Name="DeletePartner"
+                    Content="Delete Partner"
+                    Padding="10,5"
+                    Margin="5,0,0,0"
+                    Click="DeletePartner_Click"/>
         </StackPanel>
     </Grid>
 </Window>
