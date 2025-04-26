@@ -87,6 +87,27 @@ namespace Master
             }
         }
 
+        private void History_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(PartnersGrid.SelectedItem is Partner selectedPartner))
+            {
+                System.Windows.MessageBox.Show("Пожалуйста, выберите партнёра для просмотра истории.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            // Navigate to sales history page for the selected partner
+            NavigationService.Navigate(new SalesHistoryPage(selectedPartner));
+        }
+
+        private void Materials_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(PartnersGrid.SelectedItem is Partner selectedPartner))
+            {
+                System.Windows.MessageBox.Show("Пожалуйста, выберите партнёра для расчета материалов.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            NavigationService.Navigate(new MaterialCalculatorPage());
+        }
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             if (NavigationService?.CanGoBack == true)

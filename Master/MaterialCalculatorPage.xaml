@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page x:Class="Master.MaterialCalculatorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:Master"
+      mc:Ignorable="d"
+      Title="Material Calculator"
+      FontFamily="Segoe UI">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Header -->
+            <RowDefinition Height="Auto"/>  <!-- Controls -->
+            <RowDefinition Height="Auto"/>  <!-- Calculate button -->
+            <RowDefinition Height="Auto"/>  <!-- Result text -->
+            <RowDefinition Height="*"/>     <!-- Spacer -->
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <Button Content="Back" Click="Back_Click"/>
+            <TextBlock Text="Расчет материалов" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Left">
+            <StackPanel Margin="0,0,20,0">
+                <TextBlock Text="Продукт"/>
+                <ComboBox x:Name="ProductCombo" Width="200" DisplayMemberPath="ProductName"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,20,0">
+                <TextBlock Text="Материал"/>
+                <ComboBox x:Name="MaterialCombo" Width="200" DisplayMemberPath="MaterialType1"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Количество продукта"/>
+                <TextBox x:Name="QuantityText" Width="100"/>
+            </StackPanel>
+        </StackPanel>
+        <Button Content="Calculate" Grid.Row="2" Width="100" Click="Calculate_Click"/>
+        <TextBlock x:Name="ResultText" Grid.Row="3" FontSize="16" FontWeight="Bold" Margin="0,10,0,0"/>
+    </Grid>
+</Page> 
