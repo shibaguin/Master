@@ -5,8 +5,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Master.Models;
+using Master.ViewModels;
 
-namespace Master
+namespace Master.Views
 {
     public partial class PartnersListPage : Page
     {
@@ -16,7 +17,6 @@ namespace Master
         {
             InitializeComponent();
             DataContext = this;
-            // Load data when page is loaded/navigated
             Loaded += PartnersListPage_Loaded;
         }
 
@@ -25,27 +25,32 @@ namespace Master
             LoadData();
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
-            Partners.Clear();
-            using var context = new ContosoPartnersContext();
-            var partnersList = context.Partners.ToList();
-            var sales = context.Sales.Where(s => s.PartnerId != null).ToList();
-            var salesByPartner = sales
-                .GroupBy(s => s.PartnerId)
-                .ToDictionary(g => g.Key!, g => g.Sum(s => s.Quantity ?? 0));
-
-            foreach (var p in partnersList)
+            try
             {
-                var total = salesByPartner.TryGetValue(p.PartnerId, out var qty) ? qty : 0;
-                p.ComputeDiscount(total);
-                Partners.Add(p);
+                Partners.Clear();
+                var partnersList = (await App.DataService.GetPartnersAsync()).ToList();
+                var sales = (await App.DataService.GetSalesHistoryAsync()).Where(s => s.PartnerId != null).ToList();
+                var salesByPartner = sales
+                    .GroupBy(s => s.PartnerId)
+                    .ToDictionary(g => g.Key!, g => g.Sum(s => s.Quantity ?? 0));
+
+                foreach (var p in partnersList)
+                {
+                    var total = salesByPartner.TryGetValue(p.PartnerId, out var qty) ? qty : 0;
+                    p.ComputeDiscount(total);
+                    Partners.Add(p);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to edit page for new partner
             NavigationService.Navigate(new PartnerEditPage());
         }
 
@@ -56,11 +61,10 @@ namespace Master
                 System.Windows.MessageBox.Show("Пожалуйста, выберите партнёра для редактирования.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // Navigate to edit page for existing partner
             NavigationService.Navigate(new PartnerEditPage(selectedPartner));
         }
 
-        private void Delete_Click(object sender, RoutedEventArgs e)
+        private async void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (!(PartnersGrid.SelectedItem is Partner selectedPartner))
             {
@@ -72,14 +76,14 @@ namespace Master
 
             try
             {
-                using var context = new ContosoPartnersContext();
-                var partner = context.Partners.Find(selectedPartner.PartnerId);
-                if (partner != null)
+                if (await App.DataService.DeletePartnerAsync(selectedPartner.PartnerId))
                 {
-                    context.Partners.Remove(partner);
-                    context.SaveChanges();
+                    LoadData();
                 }
-                LoadData();
+                else
+                {
+                    System.Windows.MessageBox.Show("Не удалось удалить партнёра.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -94,7 +98,6 @@ namespace Master
                 System.Windows.MessageBox.Show("Пожалуйста, выберите партнёра для просмотра истории.", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            // Navigate to sales history page for the selected partner
             NavigationService.Navigate(new SalesHistoryPage(selectedPartner));
         }
 

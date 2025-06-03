@@ -12,10 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Master.Models;
+using Master.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
-namespace Master
+namespace Master.Views
 {
     /// <summary>
     /// Interaction logic for EditWindow.xaml

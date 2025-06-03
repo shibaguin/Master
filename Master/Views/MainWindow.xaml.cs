@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Master.Models;
 
-namespace Master
+namespace Master.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

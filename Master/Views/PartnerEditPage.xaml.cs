@@ -4,10 +4,11 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Master.ViewModels;
 using Master.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Master
+namespace Master.Views
 {
     public partial class PartnerEditPage : Page
     {

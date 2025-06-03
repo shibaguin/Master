@@ -6,6 +6,8 @@ namespace Master.Models;
 public partial class Partner
 {
     public string PartnerId { get; set; } = null!;
+    
+    public string Id => PartnerId;
 
     public string PartnerType { get; set; } = null!;
 

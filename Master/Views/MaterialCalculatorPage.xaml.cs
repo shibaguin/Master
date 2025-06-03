@@ -4,8 +4,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Master.Models;
+using Master.ViewModels;
 
-namespace Master
+namespace Master.Views
 {
     public partial class MaterialCalculatorPage : Page
     {
