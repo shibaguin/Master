@@ -36,7 +36,7 @@ public partial class ContosoPartnersContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             Log.Debug("Настройка подключения к базе данных");
-            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=ContosoPartners;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=192.168.0.117\\SQLEXPRESS;Database=user36;User ID=User36;Password=wsruser36;TrustServerCertificate=True;Integrated Security=False");
         }
     }
 
