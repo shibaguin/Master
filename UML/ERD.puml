@@ -1,0 +1,75 @@
+@startuml
+hide circle
+
+entity "Partners" as partners {
+  *id : INT
+  --
+  *fio : VARCHAR(255)
+  *inn : VARCHAR(20)
+  *is_jur : BOOLEAN
+  *type_id : INT
+  address : TEXT
+  phone : VARCHAR(20)
+}
+
+entity "TypesOfPartners" as types {
+  *id : INT
+  --
+  *name : VARCHAR(100)
+}
+
+entity "CarBrands" as brands {
+  *id : INT
+  --
+  *name : VARCHAR(100)
+}
+
+entity "Customers" as customers {
+  *id : INT
+  --
+  *fio : VARCHAR(255)
+  phone : VARCHAR(20)
+  email : VARCHAR(255)
+  address : TEXT
+}
+
+entity "Sales" as sales {
+  *id : INT
+  --
+  *customer_id : INT
+  *car_id : INT
+  *sale_date : DATE
+  *price : DECIMAL(10,2)
+}
+
+entity "CarsForSale" as cars {
+  *id : INT
+  --
+  *brand_id : INT
+  *model : VARCHAR(100)
+  *year : INT
+  *vin : VARCHAR(17)
+  *current_price : DECIMAL(10,2)
+  description : TEXT
+  condition : VARCHAR(100)
+}
+
+entity "PriceChanges" as prices {
+  *id : INT
+  --
+  *car_id : INT
+  *old_price : DECIMAL(10,2)
+  *new_price : DECIMAL(10,2)
+  *change_date : DATE
+}
+
+' Связи между таблицами
+partners }|--|| types
+sales }|--|| customers
+sales }|--|| cars
+cars }|--|| brands
+prices }|--|| cars
+
+
+
+@enduml
